@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Kanban board</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
 </head>
+
 <body>
-	<div id="board" class="board">
+  <div id="board" class="board">
+    <div class="board__header">
     <h1>Kanban board</h1>
     <button class="create-column">Add a column</button>
+    </div>
     <div class="column-container"></div>
   </div>
-  
+
   <script id="column-template" type="x-tmpl-mustache">
     <div class="column">
-        <h2 class="column-title">{{ name }}</h2>
-        <ul id={{ id }} class="column-card-list"></ul>
-        <button class="btn-delete">X</button>
-        <button class="add-card">Add a card</button>
+      <div class="column__header"
+        <h2 class="column__title">{{ name }}</h2>
+        <button class="column__button--delete">X</button>
+        <button class="column__button--add-card">Add a card</button>
+    </div>
+        <ul id={{ id }} class="column__card-list"></ul>
     </div>
 </script>
-<script id="card-template" type="x-tmpl-mustache">
-  <div class="card">
-    <p class="card-description">{{ description }}</p>
-    <button class="btn-delete">x</button>
+  <script id="card-template" type="x-tmpl-mustache">
+    <div class="card">
+    <p class="card__description">{{ description }}</p>
+    <button class="card__btn--delete">x</button>
   </div
 </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
-  
+
   <script src="js/script.js"></script>
 </body>
+
 </html>

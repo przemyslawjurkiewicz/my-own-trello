@@ -29,11 +29,11 @@
             });
 
             this.element.querySelector('.column').addEventListener('click', function (event) {
-                if (event.target.classList.contains('btn-delete')) {
+                if (event.target.classList.contains('column__button--delete')) {
                     self.removeColumn();
                 }
 
-                if (event.target.classList.contains('add-card')) {
+                if (event.target.classList.contains('column__button--add-card')) {
                     self.addCard(new Card(prompt("Enter the name of the card")));
                 }
             });
@@ -57,7 +57,7 @@
             this.element.querySelector('.card').addEventListener('click', function (event) {
                 event.stopPropagation();
 
-                if (event.target.classList.contains('btn-delete')) {
+                if (event.target.classList.contains('card__btn--delete')) {
                     self.removeCard();
                 }
             });
