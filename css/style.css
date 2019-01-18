@@ -48,7 +48,7 @@ body {
 }
 
 .modal {
-  visibility: hidden;
+  display: none;
   background: #fff;
   position: absolute;
   top: 50%;

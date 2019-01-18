@@ -33,7 +33,6 @@
                             if (event.target.classList.contains('column__button--delete')) {
                                 self.removeColumn();
                             }
-
                             if (event.target.classList.contains('column__button--add-card')) {
                                 showModal('#add-task');
                                  var card = new Card(document.querySelector('[name="task-name"]').value)
@@ -50,15 +49,11 @@
                 self.removeColumn();
             });
             this.element.querySelector('.column__button--add-card').addEventListener('click', function (event) {
-                event.stopPropagation();
                 showModal('#add-task');
-                document.querySelector('#add-task-button').addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    hideModal();
-                    var text = document.querySelector('[name="task-text"]').value;
-                    var card = new Card(text);
-                    self.addCard(card);
-                });
+             document.querySelector('#add-task-button').onclick = function() {
+                 self.addCard(new Card(document.querySelector('[name="task-text"]').value));
+                };
+                
             });
         }
 
@@ -66,7 +61,6 @@
             addCard: function (card) {
                 console.log(card.element);
                 this.element.querySelector('.column__card-list').appendChild(card.element);
-                // hideModal();
             },
             removeColumn: function () {
                 this.element.parentNode.removeChild(this.element);
@@ -101,19 +95,22 @@
             //Add show to overlay.
             document.querySelector('#modal-overlay').classList.add('visible');
             //Add show to modal.
-            //document.querySelector(modal).classList.add('visible');
-            document.querySelector(modal).style.visibility = "visible"; 
+            document.querySelector(modal).classList.add('visible');
+            //document.querySelector(modal).style.visibility = "visible"; 
         };
+
+        document.querySelector('#add-task-button').addEventListener('click', function (event) {
+            event.stopPropagation();
+            hideModal();
+        });
 
         //Hide all modals function
         var hideModal = function () {
-          //  document.querySelectorAll('.modal').forEach(function (modal) {
-           //     modal.classList.remove('visible');
-               
-               
-           // });
-           document.querySelector('#add-column').style.visibility = "hidden"; 
-           document.querySelector('#add-task').style.visibility = "hidden"; 
+          document.querySelectorAll('.modal').forEach(function (modal) {
+              modal.classList.remove('visible');
+                    });
+           //document.querySelector('#add-column').style.visibility = "hidden"; 
+           //document.querySelector('#add-task').style.visibility = "hidden"; 
             document.querySelector('#modal-overlay').classList.remove('visible');
         };
 
