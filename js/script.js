@@ -1,6 +1,9 @@
 'use strict';
 (function () {
     document.addEventListener('DOMContentLoaded', function () {
+        //Enter list of bgcolors:
+        var bgcolorlist=new Array("#c0dfd9", "#e9ece5", "#b3c2bf", "#b56969", "#edd9c0", "#89bdd3", "#6ed3cf", "#3fb0ac")
+
         function randomString() {
             var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
             var str = '';
@@ -15,7 +18,6 @@
             var element = document.createElement(basicElement || 'div');
             Mustache.parse(template);
             element.innerHTML = Mustache.render(template, data);
-
             return element;
         }
 
@@ -27,23 +29,7 @@
                 name: this.name,
                 id: this.id
             });
-            /*
-                        this.element.querySelector('.column').addEventListener('click', function (event) {
-                            event.stopPropagation();
-                            if (event.target.classList.contains('column__button--delete')) {
-                                self.removeColumn();
-                            }
-                            if (event.target.classList.contains('column__button--add-card')) {
-                                showModal('#add-task');
-                                 var card = new Card(document.querySelector('[name="task-name"]').value)
-                                document.querySelector('#add-task-button').addEventListener('click', function (event) {
-                                    event.stopPropagation();
-                                    self.addCard(card);
-                                    hideModal();
-                                });
-                            }
-                            
-                        });*/
+           
             this.element.querySelector('.column__button--delete').addEventListener('click', function (event) {
                 event.stopPropagation();
                 self.removeColumn();
@@ -75,6 +61,7 @@
                 description: this.description,
                 id: this.id
             });
+            this.element.querySelector('.card').style.background=bgcolorlist[Math.floor(Math.random()*bgcolorlist.length)];
             this.element.querySelector('.card').addEventListener('click', function (event) {
                 event.stopPropagation();
 
@@ -96,7 +83,7 @@
             document.querySelector('#modal-overlay').classList.add('visible');
             //Add show to modal.
             document.querySelector(modal).classList.add('visible');
-            //document.querySelector(modal).style.visibility = "visible"; 
+            
         };
 
         document.querySelector('#add-task-button').addEventListener('click', function (event) {
@@ -109,8 +96,7 @@
           document.querySelectorAll('.modal').forEach(function (modal) {
               modal.classList.remove('visible');
                     });
-           //document.querySelector('#add-column').style.visibility = "hidden"; 
-           //document.querySelector('#add-task').style.visibility = "hidden"; 
+          
             document.querySelector('#modal-overlay').classList.remove('visible');
         };
 

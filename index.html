@@ -41,15 +41,15 @@
     <div class="column">
       <div class="column__header"
         <h2 class="column__title">{{ name }}</h2>
+        <button class="column__button--add-card">Add new task</button>
         <button class="column__button--delete">X</button>
-        <button class="column__button--add-card">Add a card</button>
     </div>
         <div id={{ id }} class="column__card-list"></div>
     </div>
 </script>
   <script id="card-template" type="x-tmpl-mustache">
     <div id={{ id }} class="card">
-    <textarea class="card__description">{{ description }}</textarea>
+      <textarea class="card__text">{{ description }}</textarea>
     <button class="card__btn--delete">x</button>
   </div
 </script>
