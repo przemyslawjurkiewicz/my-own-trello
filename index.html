@@ -12,10 +12,29 @@
 <body>
   <div id="board" class="board">
     <div class="board__header">
-    <h1>Kanban board</h1>
-    <button class="create-column">Add a column</button>
+      <h1>Kanban board</h1>
+      <button class="create-column">Add a column</button>
     </div>
     <div class="column-container"></div>
+  </div>
+
+  <div class="overlay" id="modal-overlay">
+    <div class="modal" id="add-column">
+      <header class="modal__header">Add a column</header>
+      <div class="modal__content">
+        <label class="modal__label">Enter column name:</label>
+        <input class="modal__input" type="text" name="column-name" maxlength="150" placeholder="Enter column name">
+        <button class="modal__button" id="add-column-button">Add a column</button>
+      </div>
+    </div>
+    <div class="modal" id="add-task">
+      <header class="modal__header">Add task</header>
+      <div class="modal__content">
+        <label class="modal__label">Enter task text:</label>
+        <textarea class="modal__input modal__input--text" type="text" name="task-text" maxlength="150" placeholder="Enter task"></textarea>
+        <button class="modal__button" id="add-task-button">Add task</button>
+      </div>
+    </div>
   </div>
 
   <script id="column-template" type="x-tmpl-mustache">
@@ -25,12 +44,12 @@
         <button class="column__button--delete">X</button>
         <button class="column__button--add-card">Add a card</button>
     </div>
-        <ul id={{ id }} class="column__card-list"></ul>
+        <div id={{ id }} class="column__card-list"></div>
     </div>
 </script>
   <script id="card-template" type="x-tmpl-mustache">
-    <div class="card">
-    <p class="card__description">{{ description }}</p>
+    <div id={{ id }} class="card">
+    <textarea class="card__description">{{ description }}</textarea>
     <button class="card__btn--delete">x</button>
   </div
 </script>

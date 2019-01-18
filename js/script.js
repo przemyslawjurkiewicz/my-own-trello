@@ -27,20 +27,46 @@
                 name: this.name,
                 id: this.id
             });
+            /*
+                        this.element.querySelector('.column').addEventListener('click', function (event) {
+                            event.stopPropagation();
+                            if (event.target.classList.contains('column__button--delete')) {
+                                self.removeColumn();
+                            }
 
-            this.element.querySelector('.column').addEventListener('click', function (event) {
-                if (event.target.classList.contains('column__button--delete')) {
-                    self.removeColumn();
-                }
-
-                if (event.target.classList.contains('column__button--add-card')) {
-                    self.addCard(new Card(prompt("Enter the name of the card")));
-                }
+                            if (event.target.classList.contains('column__button--add-card')) {
+                                showModal('#add-task');
+                                 var card = new Card(document.querySelector('[name="task-name"]').value)
+                                document.querySelector('#add-task-button').addEventListener('click', function (event) {
+                                    event.stopPropagation();
+                                    self.addCard(card);
+                                    hideModal();
+                                });
+                            }
+                            
+                        });*/
+            this.element.querySelector('.column__button--delete').addEventListener('click', function (event) {
+                event.stopPropagation();
+                self.removeColumn();
+            });
+            this.element.querySelector('.column__button--add-card').addEventListener('click', function (event) {
+                event.stopPropagation();
+                showModal('#add-task');
+                document.querySelector('#add-task-button').addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    hideModal();
+                    var text = document.querySelector('[name="task-text"]').value;
+                    var card = new Card(text);
+                    self.addCard(card);
+                });
             });
         }
+
         Column.prototype = {
             addCard: function (card) {
-                this.element.querySelector('ul').appendChild(card.element);
+                console.log(card.element);
+                this.element.querySelector('.column__card-list').appendChild(card.element);
+                // hideModal();
             },
             removeColumn: function () {
                 this.element.parentNode.removeChild(this.element);
@@ -52,8 +78,9 @@
             this.id = randomString();
             this.description = description;
             this.element = generateTemplate('card-template', {
-                description: this.description
-            }, 'li');
+                description: this.description,
+                id: this.id
+            });
             this.element.querySelector('.card').addEventListener('click', function (event) {
                 event.stopPropagation();
 
@@ -67,6 +94,29 @@
                 this.element.parentNode.removeChild(this.element);
             }
         }
+
+        //Show modal function
+        var showModal = function (modal) {
+
+            //Add show to overlay.
+            document.querySelector('#modal-overlay').classList.add('visible');
+            //Add show to modal.
+            //document.querySelector(modal).classList.add('visible');
+            document.querySelector(modal).style.visibility = "visible"; 
+        };
+
+        //Hide all modals function
+        var hideModal = function () {
+          //  document.querySelectorAll('.modal').forEach(function (modal) {
+           //     modal.classList.remove('visible');
+               
+               
+           // });
+           document.querySelector('#add-column').style.visibility = "hidden"; 
+           document.querySelector('#add-task').style.visibility = "hidden"; 
+            document.querySelector('#modal-overlay').classList.remove('visible');
+        };
+
 
         var board = {
             name: 'Kanban Board',
@@ -86,9 +136,15 @@
         }
 
         document.querySelector('#board .create-column').addEventListener('click', function () {
-            var name = prompt('Enter a column name');
+            // hideModal();
+            showModal('#add-column');
+        });
+
+        document.querySelector('#add-column-button').addEventListener('click', function () {
+            var name = document.querySelector('[name="column-name"]').value;
             var column = new Column(name);
             board.addColumn(column);
+            hideModal();
         });
 
         // CREATING COLUMNS
