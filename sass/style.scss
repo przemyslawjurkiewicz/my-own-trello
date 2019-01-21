@@ -108,6 +108,7 @@ hr {
     position: relative;
     outline: none;
     box-shadow: 2px 2px 5px grey;
+    
 
     &__title {
         max-width: 190px;
@@ -117,10 +118,12 @@ hr {
     }
 
     &__text {
+        width: 200px;
         text-align: left;
         background: inherit;
         white-space: pre-line;
         padding: 2px;
+        word-wrap: break-word;
     }
 
     &__btn--delete {
