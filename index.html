@@ -13,7 +13,7 @@
   <div id="board" class="board">
     <div class="board__header">
       <h1>Kanban board</h1>
-      <button class="create-column">Add a column</button>
+      <button id="create-column" class="board__button">+ Add column</button>
     </div>
     <div class="column-container"></div>
   </div>
@@ -24,34 +24,41 @@
       <div class="modal__content">
         <label class="modal__label">Enter column name:</label>
         <input class="modal__input" type="text" name="column-name" maxlength="150" placeholder="Enter column name">
-        <button class="modal__button" id="add-column-button">Add a column</button>
+        <button class="modal__button" id="add-column-button">+ Add column</button>
       </div>
     </div>
     <div class="modal" id="add-task">
       <header class="modal__header">Add task</header>
       <div class="modal__content">
+        <label class="modal__label">Enter task title:</label>
+        <input class="modal__input" type="text" name="card-name" maxlength="150" placeholder="Enter task title">
         <label class="modal__label">Enter task text:</label>
-        <textarea class="modal__input modal__input--text" type="text" name="task-text" maxlength="150" placeholder="Enter task"></textarea>
-        <button class="modal__button" id="add-task-button">Add task</button>
+        <textarea class="modal__input modal__input--text" type="text" name="task-text" wrap="hard" placeholder="Enter task"></textarea>
+        <button class="modal__button" id="add-task-button">+ Add task</button>
       </div>
     </div>
   </div>
 
   <script id="column-template" type="x-tmpl-mustache">
     <div class="column">
-      <div class="column__header"
-        <h2 class="column__title">{{ name }}</h2>
-        <button class="column__button--add-card">Add new task</button>
+      <div class="column__header">
+        <p class="column__title">{{ name }}</p>
+        <button class="column__button--add-card">+ Add new task</button>
         <button class="column__button--delete">X</button>
     </div>
+    <hr>
         <div id={{ id }} class="column__card-list"></div>
     </div>
 </script>
   <script id="card-template" type="x-tmpl-mustache">
     <div id={{ id }} class="card">
-      <textarea class="card__text">{{ description }}</textarea>
-    <button class="card__btn--delete">x</button>
-  </div
+        <div class="card__header">
+          <p class="card__title">{{ description }}</p>
+          <button class="card__btn--delete">X</button>
+        </div>
+        <hr>
+      <div class="card__text">{{ text }}</div>
+    </div
 </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>

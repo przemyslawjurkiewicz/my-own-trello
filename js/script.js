@@ -2,8 +2,9 @@
 (function () {
     document.addEventListener('DOMContentLoaded', function () {
         //Enter list of bgcolors:
-        var bgcolorlist=new Array("#c0dfd9", "#e9ece5", "#b3c2bf", "#b56969", "#edd9c0", "#89bdd3", "#6ed3cf", "#3fb0ac")
+        var bgcolorlist = new Array("#c0dfd9", "#e9ece5", "#b3c2bf", "#b56969", "#edd9c0", "#89bdd3", "#6ed3cf", "#3fb0ac")
 
+        //Random string for id
         function randomString() {
             var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
             var str = '';
@@ -13,6 +14,7 @@
             return str;
         }
 
+        //Generate html from temple (mustache js)
         function generateTemplate(name, data, basicElement) {
             var template = document.getElementById(name).innerHTML;
             var element = document.createElement(basicElement || 'div');
@@ -21,6 +23,7 @@
             return element;
         }
 
+        //Column class
         function Column(name) {
             var self = this;
             this.id = randomString();
@@ -29,20 +32,24 @@
                 name: this.name,
                 id: this.id
             });
-           
+            //Column delate button listener
             this.element.querySelector('.column__button--delete').addEventListener('click', function (event) {
                 event.stopPropagation();
                 self.removeColumn();
             });
+            //Add card button listener
             this.element.querySelector('.column__button--add-card').addEventListener('click', function (event) {
+                //Show modal to add task
                 showModal('#add-task');
-             document.querySelector('#add-task-button').onclick = function() {
-                 self.addCard(new Card(document.querySelector('[name="task-text"]').value));
+                //Click button on modal - add task
+                document.querySelector('#add-task-button').onclick = function () {
+                    self.addCard(new Card(document.querySelector('[name="card-name"]').value, document.querySelector('[name="task-text"]').value));
                 };
-                
+
             });
         }
 
+        //Column class prototype
         Column.prototype = {
             addCard: function (card) {
                 console.log(card.element);
@@ -53,15 +60,18 @@
             }
         };
 
-        function Card(description) {
+        //Card class
+        function Card(description, text) {
             var self = this;
             this.id = randomString();
             this.description = description;
+            this.text = text;
             this.element = generateTemplate('card-template', {
                 description: this.description,
+                text: this.text,
                 id: this.id
             });
-            this.element.querySelector('.card').style.background=bgcolorlist[Math.floor(Math.random()*bgcolorlist.length)];
+            this.element.querySelector('.card').style.background = bgcolorlist[Math.floor(Math.random() * bgcolorlist.length)];
             this.element.querySelector('.card').addEventListener('click', function (event) {
                 event.stopPropagation();
 
@@ -70,6 +80,7 @@
                 }
             });
         }
+        //Card class prototype
         Card.prototype = {
             removeCard: function () {
                 this.element.parentNode.removeChild(this.element);
@@ -78,14 +89,21 @@
 
         //Show modal function
         var showModal = function (modal) {
-
+            //reset inputs
+            document.querySelectorAll('.modal input').forEach(function (inputs) {
+                inputs.value = '';
+            });
+            document.querySelectorAll('.modal textarea').forEach(function (textarea) {
+                textarea.value = '';
+            });
             //Add show to overlay.
             document.querySelector('#modal-overlay').classList.add('visible');
             //Add show to modal.
             document.querySelector(modal).classList.add('visible');
-            
+
         };
 
+        //Modal add task button listener - stop propagation and hide
         document.querySelector('#add-task-button').addEventListener('click', function (event) {
             event.stopPropagation();
             hideModal();
@@ -93,14 +111,13 @@
 
         //Hide all modals function
         var hideModal = function () {
-          document.querySelectorAll('.modal').forEach(function (modal) {
-              modal.classList.remove('visible');
-                    });
-          
+            document.querySelectorAll('.modal').forEach(function (modal) {
+                modal.classList.remove('visible');
+            });
             document.querySelector('#modal-overlay').classList.remove('visible');
         };
 
-
+        //Board object
         var board = {
             name: 'Kanban Board',
             addColumn: function (column) {
@@ -110,6 +127,7 @@
             element: document.querySelector('#board .column-container')
         };
 
+        //Sortable.js initiation
         function initSortable(id) {
             var el = document.getElementById(id);
             var sortable = Sortable.create(el, {
@@ -118,17 +136,19 @@
             });
         }
 
-        document.querySelector('#board .create-column').addEventListener('click', function () {
-            // hideModal();
+        //Listener for add-column button on board
+        document.querySelector('#create-column').addEventListener('click', function () {
             showModal('#add-column');
         });
 
+        //Listener for add-column button on modal.
         document.querySelector('#add-column-button').addEventListener('click', function () {
             var name = document.querySelector('[name="column-name"]').value;
             var column = new Column(name);
             board.addColumn(column);
             hideModal();
         });
+
 
         // CREATING COLUMNS
         var todoColumn = new Column('To do');
@@ -141,8 +161,8 @@
         board.addColumn(doneColumn);
 
         // CREATING CARDS
-        var card1 = new Card('New task');
-        var card2 = new Card('Create kanban boards');
+        var card1 = new Card('New task', 'Example text.');
+        var card2 = new Card('Create kanban boards', 'Make a new board.');
 
         // ADDING CARDS TO COLUMNS
         todoColumn.addCard(card1);
