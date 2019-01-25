@@ -3,7 +3,7 @@
      name: 'Kanban Board',
      addColumn: function (column) {
          this.element.appendChild(column.element);
-         // initSortable(column.id);
+         initSortable(column.id);
      },
      element: document.querySelector('#board .column-container')
  };
