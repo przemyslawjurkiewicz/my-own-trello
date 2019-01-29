@@ -47,7 +47,6 @@
          onAdd: function (evt) {
              var newColumn = evt.newIndex;
              var card = evt.item.firstElementChild;
-             console.log(card)
              fetch(prefix + baseUrl + '/board', {
                      headers: myHeaders,
                      cache: "no-store"
@@ -59,28 +58,17 @@
                      changeColumn(resp.columns[newColumn].id);
                  });
 
-             function changeColumn(newId) {
-
-                 var data = new FormData();
-                 data.append('id', card.id);
-                 data.append('bootcamp_kanban_column_id', newId);
-                 fetch(prefix + baseUrl + '/card', {
+             function changeColumn(newColumnId) {
+                 console.log(card.id)
+                 fetch(prefix + baseUrl + '/card/' + card.id, {
                      cache: "no-store",
                      method: 'PUT',
                      headers: myHeaders,
-                     body: data,
+                     body: JSON.stringify({
+                         'bootcamp_kanban_column_id': newColumnId
+                     })
                  })
-                 /* .then(function (resp) {
-                     return resp.json();
-                 })
-                 .then(function () {
-                     //var column = new Card(resp.id, name);
-                   //  console.log(newId);
-                     //id.addCard(evt.item);
-                 });*/
-
              }
-
          },
      });
  }
